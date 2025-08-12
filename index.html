@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="HeiCo-VQA-Base: The first large-scale study evaluating Vision Language Models in surgical domains.">
+  <meta name="keywords" content="Vision Language Models, VLM, Surgical AI, Medical AI, Benchmark, Evaluation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HeiCo-VQA-Base: Evaluating Vision Language Models in Surgical Domains</title>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script src="./static/js/leaderboard.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="#abstract">
+        Abstract
+      </a>
+      <a class="navbar-item" href="#findings">
+        Key Findings
+      </a>
+      <a class="navbar-item" href="#performance-analysis">
+        Performance
+      </a>
+      <a class="navbar-item" href="#leaderboard">
+        Leaderboard
+      </a>
+      <a class="navbar-item" href="#dataset">
+        Dataset
+      </a>
+      <a class="navbar-item" href="#resources">
+        Resources
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">HeiCo-VQA-Base: Evaluating Vision Language Models in Surgical Domains</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a>Leon Mayer</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a>Tim Rädsch</a><sup>1,3</sup>,</span>
+            <span class="author-block">
+              <a>Dominik Michael</a><sup>1,2,4</sup>,</span>
+            <span class="author-block">
+              <a>Lucas Luttner</a><sup>1</sup>,</span>
+            <br>
+            <span class="author-block">
+              <a>Amine Yamlahi</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a>Evangelia Christodoulou</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a>Patrick Godau</a><sup>1,2,5,6</sup>,</span>
+            <span class="author-block">
+              <a>Marcel Knopp</a><sup>1,6</sup>,</span>
+            <br>
+            <span class="author-block">
+              <a>Annika Reinke</a><sup>1,3</sup>,</span>
+            <span class="author-block">
+              <a>Fiona Kolbinger</a><sup>7,8,9,10,11</sup>,</span>
+            <span class="author-block">
+              <a>Lena Maier-Hein</a><sup>1,2,3,4,6</sup>
+            </span>
+          </div>
+
+          <div class="is-size-6 publication-authors" style="margin-top: 10px;">
+            <span class="author-block"><sup>1</sup>German Cancer Research Center (DKFZ) Heidelberg,</span>
+            <span class="author-block"><sup>2</sup>National Center for Tumor Diseases (NCT),</span>
+            <br>
+            <span class="author-block"><sup>3</sup>DKFZ Heidelberg, Helmholtz Imaging,</span>
+            <span class="author-block"><sup>4</sup>Medical Faculty, Heidelberg University,</span>
+            <br>
+            <span class="author-block"><sup>5</sup>HIDSS4Health,</span>
+            <span class="author-block"><sup>6</sup>Faculty of Mathematics and Computer Science, Heidelberg University,</span>
+            <br>
+            <span class="author-block"><sup>7</sup>Weldon School of Biomedical Engineering, Purdue University,</span>
+            <br>
+            <span class="author-block"><sup>8</sup>Regenstrief Center for Healthcare Engineering,</span>
+            <br>
+            <span class="author-block"><sup>9</sup>Department of Biostatistics and Health Data Science, Indiana University School of Medicine,</span>
+            <br>
+            <span class="author-block"><sup>10</sup>Department of Surgery, Indiana University School of Medicine,</span>
+            <span class="author-block"><sup>11</sup>University Hospital Dresden</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2506.06232v1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2506.06232v1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark" style="opacity: 0.5; cursor: not-allowed;">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Dataset (Coming Soon)</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/figure1.png" alt="Figure 1: Sample surgical images and research questions from HeiCo-VQA-Base benchmark" class="center-image" style="width: 100%; max-width: 800px; height: auto;">
+      <h2 class="subtitle has-text-centered">
+        <strong>Figure 1:</strong> Research questions addressed in this study and sample images illustrating the nature and complexity of basic perception and advanced tasks.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="abstract">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            While traditional computer vision models have historically struggled to generalize to endoscopic domains, 
+            the emergence of foundation models has shown promising cross-domain performance. In this work, we present 
+            the first large-scale study assessing the capabilities of Vision Language Models (VLMs) for endoscopic 
+            tasks with a specific focus on laparoscopic surgery. Using a diverse set of state-of-the-art models, 
+            multiple surgical datasets, and extensive human reference annotations, we address three key research 
+            questions: (1) Can current VLMs solve basic perception tasks on surgical images? (2) Can they handle 
+            advanced frame-based endoscopic scene understanding tasks? and (3) How do specialized medical VLMs 
+            compare to generalist models in this context?
+          </p>
+          <p>
+            Our results reveal that VLMs can effectively perform basic surgical perception tasks, such as object 
+            counting and localization, with performance levels comparable to general domain tasks. However, their 
+            performance deteriorates significantly when the tasks require medical knowledge. Notably, we find that 
+            specialized medical VLMs currently underperform compared to generalist models across both basic and 
+            advanced surgical tasks, suggesting that they are not yet optimized for the complexity of surgical 
+            environments.
+          </p>
+          <p>
+            These findings highlight the need for further advancements to enable VLMs to handle the unique challenges 
+            posed by surgery. Overall, our work provides important insights for the development of next-generation 
+            endoscopic AI systems and identifies key areas for improvement in medical visual language models.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section" id="findings">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Key Findings</h2>
+        
+        <div class="content has-text-centered" style="margin-bottom: 2rem;">
+          <p>Our comprehensive evaluation reveals important insights about VLM performance in surgical domains</p>
+        </div>
+
+        <!-- Finding 1 -->
+        <div class="columns is-vcentered" style="margin-bottom: 3rem;">
+          <div class="column">
+            <div class="content">
+              <h3 class="title is-4">Basic Tasks: Comparable Performance</h3>
+              <p>
+                VLMs can effectively perform basic surgical perception tasks like object counting and localization, with performance levels comparable to general domain tasks. Our cross-domain performance analysis demonstrates how VLMs perform across different domains, comparing surgical vs general tasks.
+              </p>
+            </div>
+          </div>
+          <div class="column">
+            <img src="./static/images/figure3.png" alt="Figure 3: Cross-Domain Performance Comparison" style="width: 100%; height: auto;">
+          </div>
+        </div>
+
+        <!-- Finding 2 -->
+        <div class="columns is-vcentered" style="margin-bottom: 3rem;">
+          <div class="column">
+            <img src="./static/images/figure5.png" alt="Figure 5: Performance vs Task Complexity" style="width: 100%; height: auto;">
+          </div>
+          <div class="column">
+            <div class="content">
+              <h3 class="title is-4">Medical Knowledge: Performance Drops</h3>
+              <p>
+                Performance deteriorates significantly when tasks require specific medical knowledge, highlighting limitations in domain-specific understanding. Our analysis shows how model performance systematically decreases as task complexity increases, particularly for medical-specific tasks.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Finding 3 -->
+        <div class="columns is-vcentered">
+          <div class="column">
+            <div class="content">
+              <h3 class="title is-4">Generalist vs Specialist Models</h3>
+              <p>
+                Specialized medical VLMs currently underperform compared to generalist models across both basic and advanced surgical tasks. Our direct comparison between specialized medical models and generalist VLMs reveals this surprising finding, suggesting that current medical specialization approaches may not be optimal for surgical environments.
+              </p>
+            </div>
+          </div>
+          <div class="column">
+            <img src="./static/images/figure6.png" alt="Figure 6: Medical vs Generalist Model Comparison" style="width: 100%; height: auto;">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section" id="performance-analysis">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Performance Analysis</h2>
+        
+        <div class="content has-text-centered" style="margin-bottom: 2rem;">
+          <p>Explore how model performance correlates with release date, model size, and pricing across our benchmark.</p>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="columns is-multiline">
+          <!-- Performance Over Time Chart -->
+          <div class="column is-half">
+            <div class="box">
+              <h4 class="title is-5 has-text-centered">Performance Over Time</h4>
+              <div style="position: relative; height: 300px;">
+                <canvas id="timeChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Performance vs Model Size Chart -->
+          <div class="column is-half">
+            <div class="box">
+              <h4 class="title is-5 has-text-centered">Performance vs Model Size</h4>
+              <div style="position: relative; height: 300px;">
+                <canvas id="sizeChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Performance vs Price Chart -->
+          <div class="column is-half is-offset-one-quarter">
+            <div class="box">
+              <h4 class="title is-5 has-text-centered">Performance vs Price</h4>
+              <div style="position: relative; height: 300px;">
+                <canvas id="priceChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content has-text-centered" style="margin-top: 1rem;">
+          <p class="is-size-7 has-text-grey">
+            Charts show relationships between model characteristics and performance on HeiCo-VQA-Base benchmark. 
+            Hover over data points for detailed model information including organization, specifications, and pricing.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="leaderboard">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Model Leaderboard</h2>
+        
+        <div class="content has-text-centered" style="margin-bottom: 2rem;">
+          <p>Evaluation results of 31+ Vision Language Models on HeiCo-VQA-Base benchmark. Click column headers to sort.</p>
+          
+          <!-- Filter buttons -->
+          <div class="field is-grouped is-grouped-centered" style="margin: 1rem 0;">
+            <div class="control">
+              <button class="button filter-btn is-active" data-filter="all">All Models</button>
+            </div>
+            <div class="control">
+              <button class="button filter-btn" data-filter="Open">Open Source</button>
+            </div>
+            <div class="control">
+              <button class="button filter-btn" data-filter="Closed">Closed Source</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="table is-striped is-fullwidth" id="leaderboard-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Model</th>
+                <th class="sort-header is-active" data-field="Overall">
+                  Overall <i class="fas fa-sort-down"></i>
+                </th>
+                <th class="sort-header" data-field="Spatial">
+                  Spatial <i class="fas fa-sort"></i>
+                </th>
+                <th class="sort-header" data-field="Depth">
+                  Depth <i class="fas fa-sort"></i>
+                </th>
+                <th class="sort-header" data-field="Condition">
+                  Condition <i class="fas fa-sort"></i>
+                </th>
+                <th class="sort-header" data-field="Detection">
+                  Detection <i class="fas fa-sort"></i>
+                </th>
+                <th class="sort-header" data-field="Interaction">
+                  Interaction <i class="fas fa-sort"></i>
+                </th>
+                <th class="sort-header" data-field="Color">
+                  Color <i class="fas fa-sort"></i>
+                </th>
+                <th class="sort-header" data-field="Puzzle">
+                  Puzzle <i class="fas fa-sort"></i>
+                </th>
+                <th class="sort-header" data-field="model_size">
+                  Size <i class="fas fa-sort"></i>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Table content will be populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="has-text-centered" style="margin-top: 1rem;">
+          <button class="button is-primary" onclick="showAllModels()" id="show-all-btn">Show All Models</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="dataset">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Dataset</h2>
+
+        <div class="content has-text-centered" style="margin-bottom: 2rem;">
+          <p>A comprehensive dataset for evaluating Vision Language Models on laparoscopic surgical tasks</p>
+        </div>
+        
+        <div class="columns is-centered" style="margin-bottom: 3rem;">
+          <div class="column is-two-thirds">
+            <h3 class="title is-4 has-text-centered">Dataset Overview</h3>
+            <div class="content has-text-justified">
+              <p>
+                The HeiCo-VQA-Base dataset contains surgical images and question-answer pairs specifically 
+                designed to evaluate VLM capabilities in endoscopic environments. Our dataset covers 
+                laparoscopic surgical videos from colorectal procedures, converted into a comprehensive 
+                Visual Question Answering format.
+              </p>
+              <p>
+                The dataset includes 10% human baseline annotations to ensure high-quality evaluation 
+                standards and reliable performance metrics.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dataset Statistics -->
+        <div class="columns is-multiline is-centered" style="margin: 2rem 0;">
+          <div class="column is-3 has-text-centered">
+            <div class="box">
+              <h3 class="title is-4 has-text-primary">24,252</h3>
+              <p class="subtitle is-6">Surgical Images</p>
+            </div>
+          </div>
+          <div class="column is-3 has-text-centered">
+            <div class="box">
+              <h3 class="title is-4 has-text-primary">167,384</h3>
+              <p class="subtitle is-6">Q&A Pairs</p>
+            </div>
+          </div>
+          <div class="column is-3 has-text-centered">
+            <div class="box">
+              <h3 class="title is-4 has-text-primary">10%</h3>
+              <p class="subtitle is-6">Human Annotated</p>
+            </div>
+          </div>
+          <div class="column is-3 has-text-centered">
+            <div class="box">
+              <h3 class="title is-4 has-text-primary">7</h3>
+              <p class="subtitle is-6">Task Categories</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task Categories -->
+        <div class="content">
+          <h3 class="title is-4">Task Categories</h3>
+          <div class="columns is-multiline">
+            <div class="column is-half">
+              <div class="box">
+                <h4 class="title is-5">Spatial Understanding</h4>
+                <p>Tasks requiring spatial reasoning and understanding of anatomical relationships in surgical scenes.</p>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="box">
+                <h4 class="title is-5">Depth Perception</h4>
+                <p>Evaluation of models' ability to understand depth and 3D spatial relationships in laparoscopic images.</p>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="box">
+                <h4 class="title is-5">Condition Assessment</h4>
+                <p>Medical knowledge-based tasks requiring understanding of tissue conditions and pathology.</p>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="box">
+                <h4 class="title is-5">Object Detection</h4>
+                <p>Identification and localization of surgical instruments, anatomical structures, and other objects.</p>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="box">
+                <h4 class="title is-5">Tool Interaction</h4>
+                <p>Understanding interactions between surgical tools and tissues or between multiple instruments.</p>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="box">
+                <h4 class="title is-5">Color Analysis</h4>
+                <p>Tasks focusing on color perception and its medical significance in surgical contexts.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="resources">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Resources</h2>
+
+        <!-- Links -->
+        <div class="content has-text-centered" style="margin-bottom: 2rem;">
+          <div class="buttons is-centered">
+            <a href="https://arxiv.org/abs/2506.06232v1" class="button is-primary is-medium">
+              <span class="icon"><i class="ai ai-arxiv"></i></span>
+              <span>arXiv Paper</span>
+            </a>
+            <a class="button is-info is-medium" style="opacity: 0.5; cursor: not-allowed;">
+              <span class="icon"><i class="far fa-images"></i></span>
+              <span>Dataset (Coming Soon)</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Citation -->
+        <div class="content">
+          <h3 class="title is-4">Citation</h3>
+          <div class="box" style="background-color: #f5f5f5; overflow-x: auto;">
+            <pre style="white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; line-height: 1.4; margin: 0;"><code>@article{mayer2025challenging,
+  title={Challenging Vision-Language Models with Surgical Data: A New Dataset and Broad Benchmarking Study},
+  author={Mayer, Leon and R{&quot;a}dsch, Tim and Michael, Dominik and Luttner, Lucas and Yamlahi, Amine and Christodoulou, Evangelia and Godau, Patrick and Knopp, Marcel and Reinke, Annika and Kolbinger, Fiona and Maier-Hein, Lena},
+  journal={arXiv preprint arXiv:2506.06232},
+  year={2025}
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Acknowledgments -->
+        <div class="content">
+          <h3 class="title is-4">Acknowledgments</h3>
+          <div class="box">
+            <p class="has-text-justified" style="line-height: 1.6; margin: 0;">
+              We gratefully acknowledge support from the Surgical AI Hub Germany. T. Rädsch was supported by a scholarship from the Hanns Seidel Foundation with funds from the Federal Ministry of Education and Research Germany (BMBF). We thank the authors of the HeiCo dataset, especially Martin Wagner, for releasing this valuable dataset.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://arxiv.org/pdf/2506.06232v1">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p class="has-text-centered">
+            This website is adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Add show all models functionality
+function showAllModels() {
+  const tbody = document.querySelector('#leaderboard-table tbody');
+  const btn = document.getElementById('show-all-btn');
+  
+  if (btn.textContent === 'Show All Models') {
+    // Show all models
+    tbody.innerHTML = '';
+    filteredData.forEach((model, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td class="has-text-weight-bold">${index + 1}</td>
+        <td>
+          <div class="content">
+            <p class="has-text-weight-semibold">${model.name}</p>
+            <p class="is-size-7 has-text-grey">${model.organization} ${model.family}</p>
+            <span class="tag ${model.access === 'Open' ? 'is-success' : 'is-info'} is-small">
+              ${model.access}
+            </span>
+          </div>
+        </td>
+        <td class="has-text-weight-bold has-text-primary">${(model.Overall * 100).toFixed(1)}%</td>
+        <td>${(model.Spatial * 100).toFixed(1)}%</td>
+        <td>${(model.Depth * 100).toFixed(1)}%</td>
+        <td>${(model.Condition * 100).toFixed(1)}%</td>
+        <td>${(model.Detection * 100).toFixed(1)}%</td>
+        <td>${(model.Interaction * 100).toFixed(1)}%</td>
+        <td>${(model.Color * 100).toFixed(1)}%</td>
+        <td>${(model.Puzzle * 100).toFixed(1)}%</td>
+        <td>${model.model_size || '—'}</td>
+      `;
+      tbody.appendChild(row);
+    });
+    btn.textContent = 'Show Top 10';
+    btn.classList.remove('is-primary');
+    btn.classList.add('is-light');
+  } else {
+    // Show top 10
+    displayLeaderboard();
+    btn.textContent = 'Show All Models';
+    btn.classList.remove('is-light');
+    btn.classList.add('is-primary');
+  }
+}
+</script>
+
+</body>
+</html>
